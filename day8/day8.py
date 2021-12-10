@@ -1,16 +1,18 @@
-
-KNOWN_TABLE = {0: 'abcefg',
-                1: 'cf',
-                2: 'acdeg',
-                3: 'acdfg',
-                4: 'bcdf',
-                5: 'abdfg',
-                6: 'abdefg',
-                7: 'acf',
-                8: 'abcdefg',
-                9: 'abcdfg'}
+KNOWN_TABLE = {
+    0: "abcefg",
+    1: "cf",
+    2: "acdeg",
+    3: "acdfg",
+    4: "bcdf",
+    5: "abdfg",
+    6: "abdefg",
+    7: "acf",
+    8: "abcdefg",
+    9: "abcdfg",
+}
 # flip keys and values of known table
 KNOWN_TABLE = {v: k for k, v in KNOWN_TABLE.items()}
+
 
 class Decoder:
     def __init__(self, sig_patterns, message):
@@ -34,32 +36,38 @@ class Decoder:
         joined = fives_joined + sixes_joined
 
         # Isolate a
-        a_possibilities = (self.seven - self.one)
-        self.knowns['a'] = a_possibilities.pop()
+        a_possibilities = self.seven - self.one
+        self.knowns["a"] = a_possibilities.pop()
 
         # Element that appears 3x is e
         e_possibilities = set(filter(lambda x: joined.count(x) == 3, joined))
-        self.knowns['e'] = e_possibilities.pop()
+        self.knowns["e"] = e_possibilities.pop()
 
         # Element that is in 8 but not in 1, 7, 4 and is not e is g
-        g_possibilities = self.eight - self.one - self.seven - self.four - set(self.knowns.values())
-        self.knowns['g'] = g_possibilities.pop()
+        g_possibilities = (
+            self.eight - self.one - self.seven - self.four - set(self.knowns.values())
+        )
+        self.knowns["g"] = g_possibilities.pop()
 
         # Element that appears once in the fives_joined and is not e is b
-        b_possibilities = set(filter(lambda x: fives_joined.count(x) == 1, fives_joined)) - set(self.knowns.values())
-        self.knowns['b'] = b_possibilities.pop()
+        b_possibilities = set(
+            filter(lambda x: fives_joined.count(x) == 1, fives_joined)
+        ) - set(self.knowns.values())
+        self.knowns["b"] = b_possibilities.pop()
 
         # D is 4 - 1 - knowns
         d_possibilities = self.four - self.one - set(self.knowns.values())
-        self.knowns['d'] = d_possibilities.pop()
+        self.knowns["d"] = d_possibilities.pop()
 
         # C appears twice in the sixes_joined and is not e
-        c_possibilities = set(filter(lambda x: sixes_joined.count(x) == 2, sixes_joined)) - set(self.knowns.values())
-        self.knowns['c'] = c_possibilities.pop()
+        c_possibilities = set(
+            filter(lambda x: sixes_joined.count(x) == 2, sixes_joined)
+        ) - set(self.knowns.values())
+        self.knowns["c"] = c_possibilities.pop()
 
         # F appears in 8 and has not been selected yet
         f_possibilities = self.eight - set(self.knowns.values())
-        self.knowns['f'] = f_possibilities.pop()
+        self.knowns["f"] = f_possibilities.pop()
 
     def decode_message(self):
         digits = []
@@ -67,7 +75,9 @@ class Decoder:
         flipped_knowns = {v: k for k, v in self.knowns.items()}
 
         for message_pattern in self.message:
-            message_letters = "".join(sorted([flipped_knowns[x] for x in message_pattern]))
+            message_letters = "".join(
+                sorted([flipped_knowns[x] for x in message_pattern])
+            )
 
             if message_letters in KNOWN_TABLE:
                 digits.append(KNOWN_TABLE[message_letters])

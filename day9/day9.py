@@ -17,8 +17,8 @@ for i in range(1, len(heightmap) - 1):
             heightmap[i - 1][j],
             heightmap[i + 1][j],
             heightmap[i][j - 1],
-            heightmap[i][j + 1]
-            ):
+            heightmap[i][j + 1],
+        ):
             lowpoints.append((i, j))
 
 risklevels = [1 + heightmap[pt[0]][pt[1]] for pt in lowpoints]

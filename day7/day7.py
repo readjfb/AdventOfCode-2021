@@ -1,23 +1,23 @@
-
 lines = []
 with open("day7input.txt") as f:
     lines = f.readlines()[0].split(",")
 
 lines = [int(x) for x in lines]
 
-min_diff = max(lines) ** len(lines)
-min_point = 0
+# This is crazy inneficient, but it works
+min_diff1 = max(lines) ** len(lines)
+min_diff2 = max(lines) ** len(lines)
 
-for endpoint in range(min(lines), max(lines)+1):
-    diff = 0
+for endpoint in range(min(lines), max(lines)):
+    diff1, diff2 = 0, 0
     for point in lines:
         n = abs(point - endpoint)
-        diff += (n * (n + 1)) // 2
 
-    if diff < min_diff:
-        min_diff = diff
-        min_point = endpoint
+        diff1 += n
+        diff2 += (n * (n + 1)) // 2
 
-print(min_point, min_diff)
+    min_diff1 = min(min_diff1, diff1)
+    min_diff2 = min(min_diff2, diff2)
 
-
+print("Part 1:", min_diff1)
+print("Part 2", min_diff2)

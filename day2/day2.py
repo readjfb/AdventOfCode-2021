@@ -16,7 +16,7 @@ for line in inp_lines:
     elif line[0] == "up":
         vertical_pos -= int(line[1])
 
-print(horizontal_pos, vertical_pos, horizontal_pos * vertical_pos)
+print("Part 1:", horizontal_pos * vertical_pos)
 
 # Part 2
 horizontal_pos_2, vertical_pos_2, aim = 0, 0, 0
@@ -32,4 +32,4 @@ for line in inp_lines:
     elif line[0] == "up":
         aim -= int(line[1])
 
-print(horizontal_pos_2, vertical_pos_2, horizontal_pos_2 * vertical_pos_2)
+print("Part 2:", horizontal_pos_2 * vertical_pos_2)

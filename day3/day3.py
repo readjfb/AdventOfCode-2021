@@ -30,7 +30,6 @@ gamma = bin2int(most_common)
 least_common = [not b for b in most_common]
 epsilon = bin2int(least_common)
 
-print(most_common, least_common)
 consumption = gamma * epsilon
 
 print("Part 1:", consumption)

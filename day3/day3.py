@@ -27,8 +27,7 @@ with open("day3input.txt") as f:
 # Part 1
 most_common = find_most_common_bit(lines)
 gamma = bin2int(most_common)
-least_common = [not b for b in most_common]
-epsilon = bin2int(least_common)
+epsilon = bin2int([not b for b in most_common])
 
 consumption = gamma * epsilon
 
@@ -39,13 +38,9 @@ print("Part 1:", consumption)
 possible_values = [x for x in lines]
 
 for i in range(len(lines[0])):
-    new_values = []
-
     most_common = find_most_common_bit(possible_values, most_common=True)
 
-    for line in possible_values:
-        if str(most_common[i]) == line[i]:
-            new_values.append(line)
+    new_values = [line for line in possible_values if str(most_common[i]) == line[i]]
 
     possible_values = list(new_values)
 
@@ -62,11 +57,7 @@ for i in range(len(lines[0])):
 
     least_common = find_most_common_bit(possible_values, most_common=False)
 
-    for line in possible_values:
-        if str(least_common[i]) == line[i]:
-            new_values.append(line)
-
-    possible_values = list(new_values)
+    possible_values = [line for line in possible_values if str(least_common[i]) == line[i]]
 
     if len(possible_values) == 1:
         break

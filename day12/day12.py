@@ -1,5 +1,5 @@
 class Cave:
-    def __init__(self, id, large):
+    def __init__(self, id, large) -> None:
         self.id = id
         self.children = []
         self.large = large
@@ -19,7 +19,7 @@ for line in cut_lines:
     cave_ids[line[1]].children.append(cave_ids[line[0]])
 
 
-def turtle(cave, visited, twice):
+def turtle(cave, visited, twice) -> list:
     return_list = []
     visited.append(cave.id)
 
@@ -29,7 +29,7 @@ def turtle(cave, visited, twice):
     for child in cave.children:
         if child.large or child.id not in visited:
             return_list += turtle(child, visited[:], twice)
-        elif not twice and child.id in visited and child != cave_ids["start"]:
+        elif not twice and child != cave_ids["start"]:
             return_list += turtle(child, visited[:], True)
 
     return return_list

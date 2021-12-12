@@ -12,9 +12,7 @@ cut_lines = [line.strip().split("-") for line in lines]
 combined = [set(item) for item in cut_lines]
 combined = set().union(*combined)
 
-cave_ids = {}
-for cave in combined:
-    cave_ids[cave] = Cave(cave, cave.upper() == cave)
+cave_ids = {cave: Cave(cave, cave.upper() == cave) for cave in combined}
 
 for line in cut_lines:
     cave_ids[line[0]].children.append(cave_ids[line[1]])

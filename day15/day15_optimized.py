@@ -1,13 +1,9 @@
 import heapq
 import numpy as np
 
-with open("day15input.txt") as f:
-    data = f.read().strip()
-
-risks = [[int(x) for x in line] for line in data.split("\n")]
 
 def find_shortest_path(risks) -> int:
-    len_x, len_y = risks.shape
+    len_y, len_x = risks.shape
 
     finalized = set()
     heap = [(0, (len_x - 1, len_y - 1))]
@@ -25,10 +21,10 @@ def find_shortest_path(risks) -> int:
 
         x, y = item
 
-        for neigh in ((x, y + 1), (x + 1, y), (x, y - 1), (x - 1, y)):
+        for neigh in ((x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)):
             if (
-                len_y > neigh[1] >= 0
-                and len_x > neigh[0] >= 0
+                0 <= neigh[0] < len_x
+                and 0 <= neigh[1] < len_y
                 and neigh not in finalized
             ):
                 heapq.heappush(heap, (risks[neigh[1], neigh[0]] + value, neigh))
@@ -36,15 +32,26 @@ def find_shortest_path(risks) -> int:
     print("ERROR NO PATH FOUND!")
     return None
 
-risks = np.array(risks)
-print("Part 1:", find_shortest_path(risks))
 
-fd = []
-for r in range(5):
-    a = [((risks + r + i - 1) % 9) + 1 for i in range(5)]
+def main():
+    with open("day15input.txt") as f:
+        data = f.read().strip()
 
-    fd.append(np.concatenate(a, axis=1))
+    risks = [[int(x) for x in line] for line in data.split("\n")]
 
-full_distances = np.concatenate(fd)
+    risks = np.array(risks)
+    print("Part 1:", find_shortest_path(risks))
 
-print("Part 2:", find_shortest_path(full_distances))
+    fd = []
+    for r in range(5):
+        a = [((risks + r + i - 1) % 9) + 1 for i in range(5)]
+
+        fd.append(np.concatenate(a, axis=1))
+
+    full_distances = np.concatenate(fd, axis=0)
+
+    print("Part 2:", find_shortest_path(full_distances))
+
+
+if __name__ == "__main__":
+    main()

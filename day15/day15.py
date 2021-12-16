@@ -28,9 +28,12 @@ class MyHeap:
 
 
 def find_shortest_path(risks) -> int:
+    len_distances_x = len(risks[0])
+    len_distances_y = len(risks)
+
     finalized = set()
     heap = MyHeap()
-    heap.push(0, (len(risks[0]) - 1, len(risks) - 1))
+    heap.push(0, (len_distances_x - 1, len_distances_y - 1))
 
     while heap.heap:
         value, item = heap.pop()
@@ -47,8 +50,8 @@ def find_shortest_path(risks) -> int:
 
         for neigh in [(x, y + 1), (x + 1, y), (x, y - 1), (x - 1, y)]:
             if (
-                len(risks) > neigh[1] >= 0
-                and len(risks[0]) > neigh[0] >= 0
+                len_distances_y > neigh[1] >= 0
+                and len_distances_x > neigh[0] >= 0
                 and neigh not in finalized
             ):
                 heap.push(risks[neigh[1]][neigh[0]] + value, neigh)

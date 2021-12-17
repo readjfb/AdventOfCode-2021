@@ -59,12 +59,12 @@ class Packet:
     contents: list
 
     def get_version_numbers(self) -> int:
-        return self.version + sum([x.get_version_numbers() for x in self.contents])
+        return self.version + sum(x.get_version_numbers() for x in self.contents)
 
     def get_value(self) -> int:
         if self.type_id == 0:
             # Sum packet
-            return sum([x.get_value() for x in self.contents])
+            return sum(x.get_value() for x in self.contents)
 
         elif self.type_id == 1:
             # Product packet
@@ -76,11 +76,11 @@ class Packet:
 
         elif self.type_id == 2:
             # Min packet
-            return min([x.get_value() for x in self.contents])
+            return min(x.get_value() for x in self.contents)
 
         elif self.type_id == 3:
             # Max packet
-            return max([x.get_value() for x in self.contents])
+            return max(x.get_value() for x in self.contents)
 
         elif self.type_id == 4:
             # This should never get called
@@ -131,16 +131,16 @@ def parse_literal(section) -> Tuple[int, str]:
     """
     number = ""
 
-    done_flag = False
+    done = False
 
-    while not done_flag:
+    while not done:
         next_five = section[:5]
         section = section[5:]
 
         number += next_five[1:5]
 
         if next_five[0] == "0":
-            done_flag = True
+            done = True
             continue
 
     return int(number, 2), section
@@ -180,7 +180,6 @@ def parse_packet(section) -> Tuple[Packet, list]:
         section = section[next_section_length:]
 
         subpackets = []
-
         while next_section:
             subpacket, next_section = parse_packet(next_section)
             subpackets.append(subpacket)
@@ -192,7 +191,6 @@ def parse_packet(section) -> Tuple[Packet, list]:
         section = section[11:]
 
         subpackets = []
-
         while len(subpackets) < number_subpackets:
             subpacket, section = parse_packet(section)
             subpackets.append(subpacket)

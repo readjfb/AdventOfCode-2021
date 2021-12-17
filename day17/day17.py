@@ -63,10 +63,10 @@ def solve_part1(target_x, target_y):
         if check_trial_fast(dx, dy, target_x, target_y)
     )
 
-    return check_trial(dx, dy, target_x, target_y)[1]
+    return check_trial(dx, dy, target_x, target_y)[1], dy
 
 
-def solve_part2(target_x, target_y):
+def solve_part2(target_x, target_y, max_dy):
     # Just straight up brute force the thing, with a *bit* of pruning
     possibles = 0
 
@@ -85,7 +85,7 @@ def solve_part2(target_x, target_y):
 
         possibles += sum(
             check_trial_fast(dx, dy, target_x, target_y)
-            for dy in range(target_y[0], 1000)
+            for dy in range(target_y[0], max_dy + 1)
         )
 
     return possibles
@@ -102,6 +102,8 @@ if __name__ == "__main__":
 
     input = [[int(i) for i in j] for j in input]
 
-    print("Part 1:", solve_part1(input[0], input[1]))
+    part1, p1_dy = solve_part1(input[0], input[1])
 
-    print("Part 2:", solve_part2(input[0], input[1]))
+    print("Part 1:", part1)
+
+    print("Part 2:", solve_part2(input[0], input[1], p1_dy))

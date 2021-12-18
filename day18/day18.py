@@ -2,6 +2,7 @@ import copy
 
 # This essentially operates in tree form. It's a bit of a mess, but it works
 
+
 def has_nested_depth(str_num, target_depth):
     depth = 0
 
@@ -16,10 +17,12 @@ def has_nested_depth(str_num, target_depth):
 
     return False
 
+
 def has_number_gtt(str_num, target):
     str_num = str_num.replace("[", "").replace("]", "")
 
     return any(int(i) > target for i in str_num.split(", "))
+
 
 def perform_explode(num, curr_depth=0):
     # A pair that is 5 deep is exploded in num
@@ -171,7 +174,7 @@ print("Part 1:", calculate_magnitude(result))
 # Find the largest magnitude of adding two numbers
 largest = 0
 for i, line1 in enumerate(lines[:-1]):
-    for line2 in lines[i + 1:]:
+    for line2 in lines[i + 1 :]:
         result = add_numbers(line1, line2)
         largest = max(largest, calculate_magnitude(result))
 

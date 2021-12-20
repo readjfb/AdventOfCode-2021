@@ -9,8 +9,10 @@ def get_sequence_value(sequence):
 
     return enhancement_algo[s]
 
+
 TRUE_TUPLE = (True,) * 9
 FALSE_TUPLE = (False,) * 9
+
 
 def perform_step(puzzle, inf_character):
     puzzle = np.pad(puzzle, pad_width=2, mode="constant", constant_values=inf_character)
@@ -49,10 +51,11 @@ part_1_steps = 2
 for step in range(part_1_steps):
     puzzle, inf_character = perform_step(puzzle, inf_character)
 
-print("Part 1:", np.sum(puzzle))
+ans1 = np.sum(puzzle)
+
 
 for step in range(num_steps - part_1_steps):
     puzzle, inf_character = perform_step(puzzle, inf_character)
 
+print("Part 1:", ans1)
 print("Part 2:", np.sum(puzzle))
-
